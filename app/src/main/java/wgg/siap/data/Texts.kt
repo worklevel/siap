@@ -4,7 +4,7 @@ data class Texts(
     val msgLoadingPayment: String   = "Procesando pago",
     val msgLoadingChip: String      = "No retire su tarjeta",
     val msgSuccessPrefix: String    = "Autorización",
-    val msgCancel: String           = "Operación cancelada",
+    val msgCancel: String           = "Se canceló la transacción",
     val msgTimeout: String          = "Tiempo de espera agotado",
     val msgCardRemoved: String      = "Tarjeta retirada, intente de nuevo",
     val msgServiceError: String     = "Terminal fuera de servicio",

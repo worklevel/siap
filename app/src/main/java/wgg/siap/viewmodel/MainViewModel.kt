@@ -59,33 +59,69 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     // ========== Payment ==========
-
     fun paymentProcess(msg: com.google.gson.JsonObject) {
+
+        Log.d(TAG, "[DEBUG] Estado actual del Lock: ${isProcessingPayment.get()}")
+
+        // --- NUEVA LÓGICA DE FUERZA BRUTA ---
+        if (isProcessingPayment.get()) {
+            // Si ya está en true, pero el estado de la pantalla es IDLE o ERROR,
+            // significa que el SDK se quedó colgado y no nos avisó.
+            val currentState = _screenState.value
+            if (currentState is ScreenState.Idle || currentState is ScreenState.Error) {
+                Log.w(TAG, "[LOCK:FORCE_RESET] El lock estaba en TRUE pero la pantalla está libre. Reseteando...")
+                isProcessingPayment.set(false)
+            }
+        }
+
         if (!isProcessingPayment.compareAndSet(false, true)) {
             Log.w(TAG, "[PAYMENT:SKIP] Ya en proceso, omitiendo RefInt=${msg.get("RefInt").asString}")
             return
         }
-        communicationAttempts.set(0)
-        val isConnected = CheckNetworkTask(getApplication()).execute()
-        if (isConnected) {
-            lastResponseMessage = ""
-            networkAttempts.set(0)
-            amount = msg.get("Monto").asString
-            refInt = msg.get("RefInt").asString
-            reference = "${prefs.getReference()}-$refInt"
-            Log.i(TAG, "[PAYMENT:START] Monto=$amount RefInt=$refInt Ref=$reference")
-            sendSerial(ResponseBuilder.ACK)
-            _screenState.postValue(ScreenState.Idle)
-        } else {
-            isProcessingPayment.set(false)
-            val attempts = networkAttempts.incrementAndGet()
-            Log.w(TAG, "[PAYMENT:NO_NET] Intento $attempts")
-            sendSerial(ResponseBuilder.NETWORK_ERR)
-            val texts = prefs.getTexts()
-            if (attempts > 2) {
-                _screenState.postValue(ScreenState.Error(texts.msgNetworkError, "Intente más tarde"))
+
+        var shouldKeepLockOpen = false
+
+        try {
+            communicationAttempts.set(0)
+            val isConnected = CheckNetworkTask(getApplication()).execute()
+
+            if (isConnected) {
+                lastResponseMessage = ""
+                networkAttempts.set(0)
+                amount = msg.get("Monto").asString
+                refInt = msg.get("RefInt").asString
+                reference = "${prefs.getReference()}-$refInt"
+
+                Log.i(TAG, "[PAYMENT:START] Conectado. Iniciando SDK...")
+                sendSerial(ResponseBuilder.ACK)
+                _screenState.postValue(ScreenState.Idle)
+
+                // IMPORTANTE: Aquí marcamos que NO queremos liberar el lock todavía,
+                // porque ahora el trabajo es del SDK de MIT y sus callbacks.
+                shouldKeepLockOpen = true
+
             } else {
-                _screenState.postValue(ScreenState.Error("Conectando", "Verificando conexión"))
+                // CASO: SIN RED
+                val attempts = networkAttempts.incrementAndGet()
+                Log.w(TAG, "[PAYMENT:NO_NET] Intento $attempts sin conexión")
+                sendSerial(ResponseBuilder.NETWORK_ERR)
+
+                val texts = prefs.getTexts()
+                if (attempts > 2) {
+                    _screenState.postValue(ScreenState.Error(texts.msgNetworkError, "Intente más tarde"))
+                } else {
+                    _screenState.postValue(ScreenState.Error("Conectando", "Verificando conexión"))
+                }
+                // Aquí shouldKeepLockOpen se queda en false, por lo que el finally lo liberará
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "[PAYMENT:EXCEPTION] Fallo crítico", e)
+            _screenState.postValue(ScreenState.Error("Error interno", e.message ?: "Desconocido"))
+        } finally {
+            // 3. LA CLAVE: Si no logramos "pasar la estafeta" al SDK de MIT, liberamos el lock
+            if (!shouldKeepLockOpen) {
+                Log.d(TAG, "[LOCK:RELEASE] Liberando isProcessingPayment en bloque finally")
+                isProcessingPayment.set(false)
             }
         }
     }

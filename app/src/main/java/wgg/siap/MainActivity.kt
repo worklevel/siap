@@ -252,6 +252,10 @@ open class MainActivity : AppCompatActivity(),
         screenManager.show(TAG_STATUS, StatusFragment.error(
             "Terminal no disponible", "Contacte a soporte técnico"
         ))
+
+        Handler(Looper.getMainLooper()).postDelayed({
+            loginMIT.setCredentials()
+        }, 5000)
     }
 
     override fun onInitTerminalSuccess() {
@@ -260,6 +264,7 @@ open class MainActivity : AppCompatActivity(),
         prefs.setHideButtons(true)
         deviceMIT.hideButtons(true)
         screenManager.dismiss(TAG_LOADING)
+        viewModel.handleNetworkTask()
         Handler(Looper.getMainLooper()).post { init() }
     }
 
@@ -272,6 +277,10 @@ open class MainActivity : AppCompatActivity(),
         screenManager.show(TAG_STATUS, StatusFragment.error(
             "Terminal no disponible", "Contacte a soporte técnico"
         ))
+        if(result.contains("No Network", true)){
+            Log.e("LogMIT", "Se perdio la conexion durante el login")
+            Handler(Looper.getMainLooper()).postDelayed({ loginMIT.setCredentials()},10000)
+        }
     }
 
     override fun onLoginSuccess(login: MITLogin?) {
