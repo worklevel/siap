@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Toolbar -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar2"
+        android:layout_width="0dp"
+        android:layout_height="58dp"
+        android:background="@color/WhiteSmoke"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/back"
+        android:layout_width="38dp"
+        android:layout_height="56dp"
+        android:layout_marginStart="4dp"
+        android:background="#00020202"
+        android:textColor="#D3DFDF"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView7"
+        android:layout_width="20dp"
+        android:layout_height="29dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/arrow" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/title_activity_settings"
+        android:textAllCaps="true"
+        android:textColor="@color/Gray"
+        android:textSize="@dimen/text_settings_section"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbar2"
+        app:layout_constraintEnd_toEndOf="@+id/toolbar2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/toolbar2" />
+
+    <!-- All content in ScrollView -->
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar2">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- ==================== DISPOSITIVO ==================== -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="DISPOSITIVO"
+                android:textColor="@color/Gray"
+                android:textSize="@dimen/text_settings_label"
+                android:textStyle="bold" />
+
+            <Switch
+                android:id="@+id/switchHideButtons"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:text="Mostrar botones de terminal"
+                android:textSize="@dimen/text_settings_section" />
+
+            <!-- ==================== LOGOS ==================== -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="8dp"
+                android:text="LOGOS"
+                android:textColor="@color/Gray"
+                android:textSize="@dimen/text_settings_label"
+                android:textStyle="bold" />
+
+            <Switch
+                android:id="@+id/showAmex"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:text="Mostrar logo de Amex"
+                android:textSize="@dimen/text_settings_section" />
+
+            <Switch
+                android:id="@+id/showGadapi"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:text="Mostrar logo GADAPI"
+                android:textSize="@dimen/text_settings_section" />
+
+            <!-- ==================== CONFIGURACION ==================== -->
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="8dp"
+                android:text="CONFIGURACION"
+                android:textColor="@color/Gray"
+                android:textSize="@dimen/text_settings_label"
+                android:textStyle="bold" />
+
+            <Switch
+                android:id="@+id/enableSounds"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:text="Usar Sonidos"
+                android:textSize="@dimen/text_settings_section" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Titulo pantalla principal"
+                android:textSize="@dimen/text_settings_label" />
+            <EditText
+                android:id="@+id/editTextHomeTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:maxLength="40" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Subtitulo pantalla principal"
+                android:textSize="@dimen/text_settings_label" />
+            <EditText
+                android:id="@+id/editTextHomeSubtitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:maxLength="60" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/settings_text_reference_bank"
+                android:textSize="@dimen/text_settings_label" />
+            <EditText
+                android:id="@+id/editTextReferenceBank"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:maxLength="12" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/settings_text_timeout"
+                android:textSize="@dimen/text_settings_label" />
+            <EditText
+                android:id="@+id/editTextTimeout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/settings_hint_timeout"
+                android:inputType="number"
+                android:maxLength="2" />
+
+            <!-- ==================== MENSAJES ==================== -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="8dp"
+                android:text="MENSAJES"
+                android:textColor="@color/Gray"
+                android:textSize="@dimen/text_settings_label"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_label_msg_loading_payment"
+                android:textSize="@dimen/text_settings_label" />
+            <EditText
+                android:id="@+id/editTextMsgLoadingPayment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:maxLength="80" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_label_msg_loading_chip"
+                android:textSize="@dimen/text_settings_label" />
+            <EditText
+                android:id="@+id/editTextMsgLoadingChip"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:maxLength="80" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_label_msg_success_prefix"
+                android:textSize="@dimen/text_settings_label" />
+            <EditText
+                android:id="@+id/editTextMsgSuccessPrefix"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:maxLength="40" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_label_msg_cancel"
+                android:textSize="@dimen/text_settings_label" />
+            <EditText
+                android:id="@+id/editTextMsgCancel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:maxLength="80" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_label_msg_timeout"
+                android:textSize="@dimen/text_settings_label" />
+            <EditText
+                android:id="@+id/editTextMsgTimeout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:maxLength="80" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_label_msg_card_removed"
+                android:textSize="@dimen/text_settings_label" />
+            <EditText
+                android:id="@+id/editTextMsgCardRemoved"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:maxLength="80" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_label_msg_service_error"
+                android:textSize="@dimen/text_settings_label" />
+            <EditText
+                android:id="@+id/editTextMsgServiceError"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:maxLength="80" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_label_msg_network_error"
+                android:textSize="@dimen/text_settings_label" />
+            <EditText
+                android:id="@+id/editTextMsgNetworkError"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:maxLength="80" />
+
+            <!-- ==================== TIEMPOS ==================== -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="8dp"
+                android:text="TIEMPOS AUTO-CIERRE (ms)"
+                android:textColor="@color/Gray"
+                android:textSize="@dimen/text_settings_label"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_label_auto_dismiss_error"
+                android:textSize="@dimen/text_settings_label" />
+            <EditText
+                android:id="@+id/editTextAutoDismissError"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:maxLength="6" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_label_auto_dismiss_success"
+                android:textSize="@dimen/text_settings_label" />
+            <EditText
+                android:id="@+id/editTextAutoDismissSuccess"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:maxLength="6" />
+
+            <!-- ==================== GUARDAR ==================== -->
+            <Button
+                android:id="@+id/btnSave"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="32dp"
+                android:text="Guardar todo" />
+
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

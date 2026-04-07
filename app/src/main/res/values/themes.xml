@@ -1,0 +1,16 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.siap" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/LightSlateGray</item>
+        <item name="colorPrimaryVariant">@color/SlateGray</item>
+        <item name="colorOnPrimary">@color/Black</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/Gray</item>
+        <item name="colorSecondaryVariant">@color/DarkBlue</item>
+        <item name="colorOnSecondary">@color/black</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <!-- Customize your theme here. -->
+    </style>
+</resources>

@@ -1,0 +1,42 @@
+<resources>
+    <string name="app_name">SIAP</string>
+    <!--  Dialog  -->
+    <string name="textPago">Pago</string>
+    <string name="textSuccess">aceptado</string>
+    <string name="textError">rechazado</string>
+    <string name="textCancelled">cancelado</string>
+    <string name="textProcessing">Procesando...</string>
+    <string name="text_remove_card_title">Retire su</string>
+    <string name="text_remove_card_subtitle">tarjeta</string>
+    <!--  Home  -->
+    <string name="textHome">Bienvenido al Macrolibramiento de Querétaro</string>
+    <string name="txt_title_home">Bienvenido</string>
+    <string name="txt_subtitle_home">Pago bancario disponible</string>
+
+    <!--  Settings  -->
+    <string name="textPassword">Contraseña</string>
+    <string name="title_activity_settings">Configuración</string>
+    <string name="attachment_title">Mostrar botones</string>
+    <string name="wifi_settings_button_text">Configuración Wi-Fi</string>
+    <string name="settings_text_reference_bank">Referencia bancario</string>
+    <string name="settings_text_timeout">Timeout de lectura (15–60 segundos)</string>
+    <string name="settings_hint_timeout">15</string>
+
+    <!-- Texts configurables -->
+    <string name="settings_label_msg_loading_payment">Mensaje: Procesando pago</string>
+    <string name="settings_label_msg_loading_chip">Mensaje: No retire su tarjeta</string>
+    <string name="settings_label_msg_success_prefix">Prefijo de autorización</string>
+    <string name="settings_label_msg_cancel">Mensaje: Cancelación</string>
+    <string name="settings_label_msg_timeout">Mensaje: Tiempo excedido</string>
+    <string name="settings_label_msg_card_removed">Mensaje: Tarjeta retirada</string>
+    <string name="settings_label_msg_service_error">Mensaje: Fuera de servicio</string>
+    <string name="settings_label_msg_network_error">Mensaje: Sin red</string>
+    <string name="settings_label_auto_dismiss_error">Auto-cerrar error (ms)</string>
+    <string name="settings_label_auto_dismiss_success">Auto-cerrar éxito (ms)</string>
+
+    <string name="error_connection_tvm_title">Pago bancario no disponible</string>
+    <string name="error_connection_tvm_description">Lamentamos los inconvenientes</string>
+    <string name="img_payments">payments</string>
+    <string name="img_home">image home</string>
+    <string name="img_brand">image brand</string>
+</resources>

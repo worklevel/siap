@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Tipografia unificada para pantallas fullscreen (fragments) -->
+    <dimen name="text_screen_title">52sp</dimen>        <!-- Titulo arriba de la animacion -->
+    <dimen name="text_screen_subtitle">32sp</dimen>     <!-- Mensaje debajo de la animacion -->
+    <dimen name="text_screen_status">34sp</dimen>       <!-- Estado: "Procesando..." -->
+
+    <!-- Tipografia para Home -->
+    <dimen name="text_home_title">50sp</dimen>
+    <dimen name="text_home_subtitle">40sp</dimen>
+
+    <!-- Tipografia para Settings -->
+    <dimen name="text_settings_section">16sp</dimen>    <!-- Labels de switches y secciones -->
+    <dimen name="text_settings_label">14sp</dimen>      <!-- Labels de campos de texto -->
+
+    <!-- Animaciones Lottie -->
+    <dimen name="lottie_screen_size">300dp</dimen>
+
+    <!-- Margenes de pantalla -->
+    <dimen name="screen_horizontal_margin">32dp</dimen>
+    <dimen name="screen_spacing">32dp</dimen>
+</resources>

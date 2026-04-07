@@ -1,0 +1,101 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+}
+
+android {
+    compileSdk 33
+    namespace 'wgg.siap'
+
+    defaultConfig {
+        applicationId "wgg.siap"
+        minSdk 24
+        targetSdk 33
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
+        ndk {
+            abiFilters "armeabi-v7a", "armeabi", "x86", "x86_64"
+        }
+        packagingOptions {
+            jniLibs {
+                useLegacyPackaging true
+            }
+        }
+        def keysPropertiesFile = rootProject.file("keys.properties")
+        if (keysPropertiesFile.exists()) {
+            def keysProperties = new Properties()
+            keysProperties.load(new FileInputStream(keysPropertiesFile))
+            buildConfigField "String", "ACCESS", "\"${keysProperties.getProperty("ACCESS")}\""
+
+        }
+    }
+
+    buildTypes {
+        release {
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            minifyEnabled false
+            shrinkResources false
+
+            applicationVariants.all { variant ->
+                variant.outputs.all {
+                    outputFileName = "siap_release.apk"
+                }
+            }
+        }
+    }
+    buildFeatures {
+        viewBinding = true
+        buildConfig = true
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+    kotlinOptions {
+        jvmTarget = '17'
+    }
+    packaging {
+        jniLibs {
+            useLegacyPackaging true
+        }
+    }
+}
+
+dependencies {
+    //PROD
+    /*implementation files('libs/PROD/sdkVierge_PROD_01.15.18-release.aar')
+    implementation files('libs/PROD/MITMobileLibrary-2.6.3-release.aar')
+    implementation files('libs/PROD/MITReaderLibrary-2.6.3-release.aar')*/
+
+    //QA
+    implementation files('libs/QA/sdkVierge_DEV_01.15.18-release.aar')
+    implementation files('libs/QA/MITMobileLibrary-2.6.3_QA_release.aar')
+    implementation files('libs/QA/MITReaderLibrary-2.6.3_QA_release.aar')
+
+    implementation files('libs/CONF/firebasedatamodule-release.aar')
+
+    implementation 'androidx.room:room-runtime:2.5.1'
+    implementation 'androidx.core:core-ktx:1.9.0'
+    implementation 'com.google.code.gson:gson:2.9.1'
+
+    implementation 'com.google.android.material:material:1.9.0'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'androidx.preference:preference-ktx:1.2.0'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2'
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.6.2'
+    implementation 'androidx.activity:activity-ktx:1.7.2'
+
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    implementation 'com.airbnb.android:lottie:5.2.0'
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    implementation 'io.github.binaryfoo:emv-bertlv:0.1.7'
+
+
+}

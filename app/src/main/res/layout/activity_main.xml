@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context="wgg.siap.MainActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/payments"
+            android:layout_width="310dp"
+            android:layout_height="42dp"
+            android:contentDescription="@string/img_payments"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.475"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/img_logo"
+            app:layout_constraintVertical_bias="0.97"
+            app:srcCompat="@drawable/marks"
+            tools:ignore="ImageContrastCheck" />
+
+        <Button
+            android:id="@+id/settings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#00020202"
+            android:enabled="false"
+            android:textColor="#D3DFDF"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/secondStep"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <Button
+            android:id="@+id/secondStep"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#00020202"
+            android:enabled="false"
+            android:textColor="#D3DFDF"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/firstStep"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#00020202"
+            android:textColor="#D3DFDF"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toEndOf="@+id/secondStep"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteY="0dp" />
+
+        <ImageView
+            android:id="@+id/img_logo"
+            android:layout_width="308dp"
+            android:layout_height="274dp"
+            android:layout_marginTop="32dp"
+            android:contentDescription="@string/img_home"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.495"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/txt_title_home"
+            app:srcCompat="@drawable/logo" />
+
+        <ImageView
+            android:id="@+id/sponsor"
+            android:layout_width="367dp"
+            android:layout_height="55dp"
+            android:layout_marginTop="4dp"
+            android:contentDescription="@string/img_brand"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/sponsor" />
+
+        <TextView
+            android:id="@+id/txt_title_home"
+            android:layout_width="306dp"
+            android:layout_height="83dp"
+            android:layout_marginTop="40dp"
+            android:text="@string/txt_title_home"
+            android:textAlignment="center"
+            android:textSize="50sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.495"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/sponsor" />
+
+        <TextView
+            android:id="@+id/txt_subtitle_home"
+            android:layout_width="327dp"
+            android:layout_height="114dp"
+            android:text="@string/txt_subtitle_home"
+            android:textAlignment="center"
+            android:textSize="40sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/payments"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/img_logo"
+            app:layout_constraintVertical_bias="0.567" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <FrameLayout
+        android:id="@+id/fragmentContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
+        android:clickable="true"
+        android:focusable="true"
+        android:visibility="gone" />
+
+</FrameLayout>

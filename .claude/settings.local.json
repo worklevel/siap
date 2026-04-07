@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(head -3 /Users/bryankth/AndroidStudioProjects/marriot/app/src/main/java/wgg/cem/screens/*.kt)",
+      "Bash(brew install:*)",
+      "Bash(pdftoppm -v)",
+      "Bash(pdftotext \"/Users/bryankth/Downloads/08-Ford-Focus/Proyectos gadapi/MITVending/2.5.6/DEMO/Manual Integración MobileIntegration-2.5.6.pdf\" /tmp/mit_manual.txt)",
+      "Read(//tmp/**)",
+      "Bash(pdftotext \"/Users/bryankth/Downloads/Manual de integración Drive-PAX IM30 V1_6 SIAP.pdf\" /tmp/siap_manual.txt)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(rsync -a --exclude='.git' --exclude='.gradle' --exclude='build' --exclude='*.iml' --exclude='.idea/caches' /Users/bryankth/AndroidStudioProjects/marriot/ /Users/bryankth/AndroidStudioProjects/SIAP/)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:8091/lottie-preview.html)",
+      "Bash(ls /Users/bryankth/AndroidStudioProjects/Totem/app/src/main/res/drawable/sponsorg*)",
+      "Bash(git checkout:*)",
+      "WebSearch"
+    ]
+  }
+}
