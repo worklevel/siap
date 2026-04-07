@@ -107,6 +107,7 @@ open class MainActivity : AppCompatActivity(),
                 }
 
                 is ScreenState.Cancel -> {
+                    playSound(R.raw.deny_sound_v2)
                     screenManager.show(TAG_STATUS, StatusFragment.cancel(state.title, state.message))
                     screenManager.scheduleAutoDismiss(TAG_STATUS, texts.autoDismissErrorMs)
                 }
@@ -114,6 +115,7 @@ open class MainActivity : AppCompatActivity(),
                 is ScreenState.Warning -> {
                     val fragment = when (state.type) {
                         "tolerancia", "tolerencia" -> StatusFragment.tolerance(state.title, state.message)
+                        "error", "Atención" -> StatusFragment.error(state.title, state.message)
                         else -> StatusFragment.warning(state.title, state.message)
                     }
 

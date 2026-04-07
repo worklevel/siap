@@ -8,6 +8,7 @@ import mx.com.mit.mobile.mitmobilelibrary.manager.login.MITLoginManager
 import mx.com.mit.mobile.mitmobilelibrary.model.MITEnvironment
 import mx.com.mit.mobile.mitmobilelibrary.model.MITError
 import mx.com.mit.mobile.mitmobilelibrary.model.MITLogin
+import mx.com.mit.mobile.mitmobilelibrary.model.MITReader
 
 class LoginMIT(
     private val context: Context,
@@ -15,7 +16,7 @@ class LoginMIT(
 ) : MITLoginCallback {
 
     private val loginManager: MITLoginManager by lazy {
-        MITLoginManager(context, this, MITEnvironment.QA)
+        MITLoginManager(context, this, MITEnvironment.QA, MITReader.Model.IM30)
     }
 
     fun setCredentials() {

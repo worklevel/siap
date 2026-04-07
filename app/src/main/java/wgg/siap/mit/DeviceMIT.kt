@@ -3,8 +3,10 @@ package wgg.siap.mit
 import android.content.Context
 import mx.com.mit.mobile.mitmobilelibrary.manager.device.MITDeviceCallback
 import mx.com.mit.mobile.mitmobilelibrary.manager.device.MITDeviceManager
+import mx.com.mit.mobile.mitmobilelibrary.model.MITBondedDevices
 import mx.com.mit.mobile.mitmobilelibrary.model.MITEnvironment
 import mx.com.mit.mobile.mitmobilelibrary.model.MITError
+import mx.com.mit.mobile.mitmobilelibrary.model.MITProcessStatus
 import mx.com.mit.mobile.mitmobilelibrary.model.MITReader
 class DeviceMIT(
     private val context: Context,
@@ -37,6 +39,9 @@ class DeviceMIT(
         }
     }
 
+    override fun onDeviceFoundResponse(foundDevice: MITBondedDevices) {
+    }
+
     override fun onInitTerminalResponse(error: MITError?) {
         if(error != null) {
             listener.onInitTerminalError(error.toString())
@@ -45,15 +50,28 @@ class DeviceMIT(
         }
     }
 
+    override fun onMITError(error: MITError?) {
+    }
+
 
     override fun onDeviceInformationResponse(reader: MITReader) {
         listener.deviceResult("########################## - onDeviceInformationResponse[Success]: $reader")
     }
+
+    override fun onDeviceScanFinishedResponse() {
+    }
+
     override fun onEmvConfigResponse(error: MITError?) { /** Don't support IM30 **/ }
     override fun isCardPresent(hasCard: Boolean, error: MITError?) { /** Don't support IM30 **/ }
     override fun onPrintResult(error: MITError?) { /** Don't support IM30 **/ }
     override fun onRePrintVoucherResponse(error: MITError?) { /** Don't support IM30 **/ }
     override fun onResultBarCode(content: String?, error: MITError?) { /** Don't use **/ }
+    override fun onUpdateFirmwereResponse(
+        process: Int,
+        processStatus: MITProcessStatus,
+        error: MITError?
+    ) {
+    }
 
     interface DeviceListener {
         fun deviceResult(result: String)
