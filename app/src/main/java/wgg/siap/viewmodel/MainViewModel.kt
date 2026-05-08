@@ -64,13 +64,25 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
         Log.d(TAG, "[DEBUG] Estado actual del Lock: ${isProcessingPayment.get()}")
 
         // --- NUEVA LÓGICA DE FUERZA BRUTA ---
-        if (isProcessingPayment.get()) {
+        /*if (isProcessingPayment.get()) {
             // Si ya está en true, pero el estado de la pantalla es IDLE o ERROR,
             // significa que el SDK se quedó colgado y no nos avisó.
             val currentState = _screenState.value
             if (currentState is ScreenState.Idle || currentState is ScreenState.Error) {
                 Log.w(TAG, "[LOCK:FORCE_RESET] El lock estaba en TRUE pero la pantalla está libre. Reseteando...")
                 isProcessingPayment.set(false)
+            }
+        }*/
+        if (isProcessingPayment.get()) {
+            val currentState = _screenState.value
+            // Log detallado para saber POR QUÉ no entraría al reset
+            Log.d(TAG, "[DEBUG:LOCK] Lock en TRUE. Estado actual de pantalla: ${currentState?.javaClass?.simpleName}")
+
+            if (currentState is ScreenState.Idle || currentState is ScreenState.Error) {
+                Log.w(TAG, "[LOCK:FORCE_RESET] Reseteando lock...")
+                isProcessingPayment.set(false)
+            } else {
+                Log.d(TAG, "[DEBUG:LOCK] No se reseteó porque el estado es ${currentState}")
             }
         }
 
@@ -86,11 +98,18 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             val isConnected = CheckNetworkTask(getApplication()).execute()
 
             if (isConnected) {
+                val isReferenceEmpty = prefs.getReference().isEmpty()
+
                 lastResponseMessage = ""
                 networkAttempts.set(0)
                 amount = msg.get("Monto").asString
                 refInt = msg.get("RefInt").asString
-                reference = "${prefs.getReference()}-$refInt"
+
+                reference = if (!isReferenceEmpty){
+                    "$refInt-${prefs.getReference()}"
+                }else{
+                    refInt
+                }
 
                 Log.i(TAG, "[PAYMENT:START] Conectado. Iniciando SDK...")
                 sendSerial(ResponseBuilder.ACK)
@@ -346,7 +365,7 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                     fechaAuth = "${transaction.date} ${transaction.time}",
                     numOper = transaction.folio.orEmpty(),
                     numAuth = transaction.auth.orEmpty(),
-                    ref = reference,
+                    ref = refInt,
                     tipoTarjeta = ccType.substringBeforeLast("/"),
                     marcaTarjeta = ccType.substringAfterLast("/")
                 )

@@ -63,22 +63,43 @@ open class MainActivity : AppCompatActivity(),
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
 
-        appConfigurator = AppConfigurator(this)
+        appConfigurator = AppConfigurator(applicationContext)
+
+        // Segunda validación por seguridad
         if (!appConfigurator.verificarConfiguracion()) {
-            Log.w("SIAP", "[CONFIG] Sin configuración, lanzando StartActivity")
-            val intent = Intent(this, Class.forName("com.example.firebasedatamodule.StartActivity"))
-            startActivity(intent)
-            finish()
+            redirigirAConfiguracion()
             return
         }
 
+        //Solo si pasó, inflamos
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
         observeViewModel()
+
+        // Retraso para que el sistema termine de registrar el toast
+        Handler(Looper.getMainLooper()).postDelayed({
+            if (!isFinishing && !isDestroyed) {
+                iniciarFlujoSeguro()
+            }
+        }, 800)
+    }
+
+    private fun redirigirAConfiguracion() {
+        Log.w("SIAP", "[CONFIG] Falló. Redirigiendo y cerrando...")
+        val intent = Intent(this, Class.forName("com.example.firebasedatamodule.StartActivity"))
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        startActivity(intent)
+        finish()
+    }
+
+    private fun iniciarFlujoSeguro() {
+        // Si llegamos aquí, la configuración fue exitosa.
+        // Mostramos el loading y pedimos permisos.
         screenManager.show(TAG_LOADING, LoadingFragment.newInstance("Iniciando..."))
-        comManager.connect()
         permissions()
+        comManager.connect()
     }
 
     private fun observeViewModel() {
@@ -131,14 +152,15 @@ open class MainActivity : AppCompatActivity(),
     }
 
     private fun init() {
+        loadLogo()
         binding.firstStep.setOnClickListener { binding.secondStep.isEnabled = true }
         binding.secondStep.setOnClickListener { binding.settings.isEnabled = true }
         binding.settings.setOnClickListener {
             binding.settings.isEnabled = false
             binding.secondStep.isEnabled = false
+            comManager.disconnect()
             startActivity(
                 Intent(this, PasswordActivity::class.java)
-                    .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
             )
         }
     }
@@ -146,6 +168,13 @@ open class MainActivity : AppCompatActivity(),
     override fun onStart() {
         super.onStart()
         serialManager.clearBuffer()
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+        comManager.connect()
+        screenManager.show(TAG_LOADING, LoadingFragment.newInstance("Iniciando..."))
+        loginMIT.setCredentials()
     }
 
     override fun onResume() {
@@ -158,7 +187,12 @@ open class MainActivity : AppCompatActivity(),
 
     override fun onDestroy() {
         super.onDestroy()
-        comManager.disconnect()
+        if(isFinishing){
+            Log.d("APPLOG", "Estoy en el onDestroy")
+        }else{
+            Log.d("APPLOG", "Estoy en el onDestroy, desconectando el comManager")
+            comManager.disconnect()
+        }
     }
 
     /**************************************************** [ Serial ] **/
@@ -167,6 +201,7 @@ open class MainActivity : AppCompatActivity(),
         when (message) {
             is IncomingMessage.Payment -> {
                 viewModel.paymentProcess(message.json)
+                Log.d("APPLOG", "El valor de viewmodel.isProcessing.get(): ${viewModel.isProcessingPayment.get()}")
                 if (viewModel.isProcessingPayment.get()) {
                     readingMIT.doRetail(
                         viewModel.getAmountForRetail(),
@@ -230,6 +265,7 @@ open class MainActivity : AppCompatActivity(),
 
     override fun displayTransactionResult(transaction: MITTransaction) {
         viewModel.onDisplayTransactionResult(transaction)
+        Log.d("APPLOG", "Resultado de la transaccion: $transaction")
     }
 
     override fun onRefundResult(transaction: MITTransaction?, error: MITError?) {
@@ -315,7 +351,6 @@ open class MainActivity : AppCompatActivity(),
             ActivityCompat.requestPermissions(this, permissionsNeeded.toTypedArray(), locationAndPhonePermissions)
         } else {
             loginMIT.setCredentials()
-            loadLogo()
         }
     }
 

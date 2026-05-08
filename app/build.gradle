@@ -4,6 +4,14 @@ plugins {
 }
 
 android {
+    signingConfigs {
+        release {
+            storeFile file('C:\\Users\\Usuario02\\Documents\\Keychain\\AlexisKey\\key_mxstore.jks')
+            storePassword 'VSAT#3!VSAt'
+            keyPassword 'VSAT#3!VSAt'
+            keyAlias 'KEY0'
+        }
+    }
     compileSdk 33
     namespace 'wgg.siap'
 
@@ -11,8 +19,8 @@ android {
         applicationId "wgg.siap"
         minSdk 24
         targetSdk 33
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName "1.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
@@ -38,6 +46,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             minifyEnabled false
             shrinkResources false
+            signingConfig signingConfigs.release
 
             applicationVariants.all { variant ->
                 variant.outputs.all {
@@ -66,14 +75,14 @@ android {
 
 dependencies {
     //PROD
-    /*implementation files('libs/PROD/sdkVierge_PROD_01.15.20-release.aar')
+    implementation files('libs/PROD/sdkVierge_PROD_01.15.20-release.aar')
     implementation files('libs/PROD/MITMobileLibrary-2.7.3-release.aar')
-    implementation files('libs/PROD/MITReaderLibrary-2.7.3-release.aar')*/
+    implementation files('libs/PROD/MITReaderLibrary-2.7.3-release.aar')
 
     //QA
-    implementation files('libs/QA/sdkVierge_DEV_01.15.20-release.aar')
+    /*implementation files('libs/QA/sdkVierge_DEV_01.15.20-release.aar')
     implementation files('libs/QA/MITMobileLibrary-2.7.3-DEV-QA-release.aar')
-    implementation files('libs/QA/MITReaderLibrary-2.7.3-DEV-QA-release.aar')
+    implementation files('libs/QA/MITReaderLibrary-2.7.3-DEV-QA-release.aar')*/
 
     implementation files('libs/CONF/firebasedatamodule-release.aar')
 

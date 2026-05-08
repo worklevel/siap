@@ -31,7 +31,7 @@ class Prefs(val context: Context) {
     /**************************************************** [ REFERENCE / TIMEOUT ] **/
 
     fun setReference(result: String) = storage.edit().putString(REFERENCE, result).apply()
-    fun getReference(): String = storage.getString(REFERENCE, "Demo") ?: "Demo"
+    fun getReference(): String = storage.getString(REFERENCE, "") ?: ""
 
     fun setTmout(result: Int) = storage.edit().putInt(TMOUT, result).apply()
     fun getTmout(): Int = storage.getInt(TMOUT, 15)

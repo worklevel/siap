@@ -16,7 +16,7 @@ class LoginMIT(
 ) : MITLoginCallback {
 
     private val loginManager: MITLoginManager by lazy {
-        MITLoginManager(context, this, MITEnvironment.QA, MITReader.Model.IM30)
+        MITLoginManager(context, this, MITEnvironment.PROD, MITReader.Model.IM30)
     }
 
     fun setCredentials() {

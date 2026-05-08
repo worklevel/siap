@@ -1,6 +1,7 @@
 package wgg.siap.mit
 
 import android.content.Context
+import android.util.Log
 import mx.com.mit.mobile.mitmobilelibrary.manager.transaction.reading.MITReadingCallback
 import mx.com.mit.mobile.mitmobilelibrary.manager.transaction.reading.MITReadingManager
 import mx.com.mit.mobile.mitmobilelibrary.model.*
@@ -26,12 +27,14 @@ class ReadingMIT(
         timeoutSeconds: Int = 15
     ) {
         // Timeout configurable entre 15 y 60 segundos (Manual SIAP §2.8)
+        Log.d("APPLOG", "Estoy en el doRetail")
         val clampedTimeout = timeoutSeconds.coerceIn(15, 60)
         readingManager.setReadingSettings(clampedTimeout, true, true)
         readingManager.doRetail(amount, reference, this.currency, this.userTransaction)
     }
 
     fun cancelReadingCard()  {
+        Log.d("APPLOG", "Estoy en un onCancelReadingCard")
         if(payment.get() != 1) {
             readingManager.cancelReadingCard()
         }
@@ -47,6 +50,7 @@ class ReadingMIT(
     }
 
     override fun onMITError(error: MITError?) {
+        Log.d("APPLOG", "Estoy en un mit error")
         error?.description?.let {
             payment.set(0)
             listener.readingResult(it)
@@ -58,6 +62,8 @@ class ReadingMIT(
     }
 
     override fun onCancelReadingCard() {
+        Log.d("APPLOG", "Estoy en un onCancelReading")
+
         payment.set(0)
         listener.cancelReadingCard()
     }

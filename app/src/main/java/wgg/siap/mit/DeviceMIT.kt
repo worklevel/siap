@@ -1,6 +1,7 @@
 package wgg.siap.mit
 
 import android.content.Context
+import android.util.Log
 import mx.com.mit.mobile.mitmobilelibrary.manager.device.MITDeviceCallback
 import mx.com.mit.mobile.mitmobilelibrary.manager.device.MITDeviceManager
 import mx.com.mit.mobile.mitmobilelibrary.model.MITBondedDevices
@@ -13,7 +14,7 @@ class DeviceMIT(
     private val listener: DeviceListener
 ) : MITDeviceCallback {
     private val deviceManager: MITDeviceManager by lazy {
-        MITDeviceManager(context, MITReader.Model.IM30, this, MITEnvironment.QA)
+        MITDeviceManager(context, MITReader.Model.IM30, this, MITEnvironment.PROD)
     }
 
     fun connectDevice() {
