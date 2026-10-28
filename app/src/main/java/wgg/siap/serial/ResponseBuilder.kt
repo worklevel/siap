@@ -16,6 +16,7 @@ object ResponseBuilder {
         numTarjeta: String = "",
         nombre: String = "",
         fechaAuth: String = "",
+        fechaCancel: String = "",
         numOper: String = "",
         numAuth: String = "",
         ref: String = "",
@@ -29,6 +30,7 @@ object ResponseBuilder {
         json.addProperty("NumTarjeta", numTarjeta)
         json.addProperty("Nombre", nombre)
         json.addProperty("FechaAuth", fechaAuth)
+        json.addProperty("FechaCancel", fechaCancel)
         json.addProperty("NumOper", numOper)
         json.addProperty("NumAuth", numAuth)
         json.addProperty("Ref", ref)

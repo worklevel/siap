@@ -9,6 +9,7 @@ import mx.com.mit.mobile.mitmobilelibrary.model.MITEnvironment
 import mx.com.mit.mobile.mitmobilelibrary.model.MITError
 import mx.com.mit.mobile.mitmobilelibrary.model.MITLogin
 import mx.com.mit.mobile.mitmobilelibrary.model.MITReader
+import kotlin.getValue
 
 class LoginMIT(
     private val context: Context,
@@ -16,7 +17,7 @@ class LoginMIT(
 ) : MITLoginCallback {
 
     private val loginManager: MITLoginManager by lazy {
-        MITLoginManager(context, this, MITEnvironment.PROD, MITReader.Model.IM30)
+        MITLoginManager(context, this, MITEnvironment.QA, MITReader.Model.IM30)
     }
 
     fun setCredentials() {

@@ -142,10 +142,11 @@
     <color name="Black">#000000</color>
 
     <!-- Colores de pantallas de estado -->
-    <color name="screenTextPrimary">#494949</color>
+    <color name="screenTextPrimary">#595959</color>
     <color name="screenTextSecondary">#000000</color>
     <color name="screenSuccess">#2E7D32</color>
     <color name="screenError">#C62828</color>
     <color name="screenCancel">#FFAA00</color>
-    <color name="screenTime">#272727</color>
+    <color name="screenTime">#161616</color>
+    <color name="accent">#0b3266</color>
 </resources>

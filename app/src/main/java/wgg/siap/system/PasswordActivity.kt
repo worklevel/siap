@@ -38,7 +38,7 @@ class PasswordActivity : AppCompatActivity() {
                 else -> false
             }
         }
-        timerCloseActivity = object: CountDownTimer(30000, 1000) {
+        timerCloseActivity = object: CountDownTimer(15000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 count = findViewById<TextView>(R.id.counter)
                 count.text = (millisUntilFinished/1000).toString()

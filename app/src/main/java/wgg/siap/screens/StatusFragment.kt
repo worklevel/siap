@@ -1,6 +1,7 @@
 package wgg.siap.screens
 
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,9 +11,13 @@ import androidx.annotation.RawRes
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.airbnb.lottie.LottieAnimationView
+import wgg.siap.InitApplication.Companion.prefs
 import wgg.siap.R
+import wgg.siap.viewmodel.ScreenState
+import wgg.siap.viewmodel.ScreenState.ErrorAck
 
 class StatusFragment : Fragment() {
+    private lateinit var timerCloseActivity: CountDownTimer
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -24,6 +29,7 @@ class StatusFragment : Fragment() {
         val titleView = view.findViewById<TextView>(R.id.txtTitle)
         val animView = view.findViewById<LottieAnimationView>(R.id.animIcon)
         val messageView = view.findViewById<TextView>(R.id.txtMessage)
+        val timer = view.findViewById<TextView>(R.id.counterNoAck)
 
         // Titulo
         titleView.text = args.getString(ARG_TITLE).orEmpty()

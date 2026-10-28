@@ -7,6 +7,7 @@ sealed class IncomingMessage {
     data class Refund(val json: JsonObject) : IncomingMessage()
     data class Control(val json: JsonObject) : IncomingMessage()
     data class Screen(val type: String, val message: String) : IncomingMessage()
+    data class TransactionResult(val json: JsonObject) : IncomingMessage()
     object Ack : IncomingMessage()
     object Nack : IncomingMessage()
     object Unknown : IncomingMessage()

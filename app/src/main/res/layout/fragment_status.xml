@@ -6,6 +6,18 @@
     android:background="@android:color/white">
 
     <TextView
+        android:id="@+id/counterNoAck"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:visibility="invisible"
+        android:layout_marginEnd="16dp"
+        android:text="TextView"
+        android:textColor="@color/Gray"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
         android:id="@+id/txtTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"

@@ -24,6 +24,7 @@ class Prefs(val context: Context) {
     private val KEY_AUTO_DISMISS_ERROR_MS  = "auto_dismiss_error_ms"
     private val KEY_AUTO_DISMISS_SUCCESS_MS = "auto_dismiss_success_ms"
     private val SOUND_ENABLED = "sound_enabled"
+    private val NO_ACK = "ack"
 
     private val storage = context.getSharedPreferences(DEVICE, 0)
     private val defaults = Texts()
@@ -37,7 +38,7 @@ class Prefs(val context: Context) {
     fun getTmout(): Int = storage.getInt(TMOUT, 15)
 
     fun setAmex(result: Boolean) = storage.edit().putBoolean(AMEX, result).apply()
-    fun getAmex(): Boolean = storage.getBoolean(AMEX, false)
+    fun getAmex(): Boolean = storage.getBoolean(AMEX, true)
 
     fun setGadapi(result: Boolean) = storage.edit().putBoolean(GADAPI, result).apply()
     fun getGadapi(): Boolean = storage.getBoolean(GADAPI, false)
@@ -50,6 +51,9 @@ class Prefs(val context: Context) {
 
     fun setHomeSubtitle(result: String) = storage.edit().putString(KEY_HOME_SUBTITLE, result).apply()
     fun getHomeSubtitle(): String = storage.getString(KEY_HOME_SUBTITLE, "Pago bancario disponible") ?: "Pago bancario disponible"
+
+    fun setNoAck(retult: String) = storage.edit().putString(NO_ACK, retult).apply()
+    fun getTimeErrorNoAck(): String = storage.getString(NO_ACK, "10") ?: "10"
 
     /** MÉTODOS  PARA SWITCH DE SONIDOS **/
     fun setSoundEnabled(isEnabled: Boolean) {

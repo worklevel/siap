@@ -39,4 +39,5 @@
     <string name="img_payments">payments</string>
     <string name="img_home">image home</string>
     <string name="img_brand">image brand</string>
+    <string name="txt_version">V1.2</string>
 </resources>

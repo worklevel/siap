@@ -28,21 +28,9 @@ object MessageRouter {
     fun route(jsonString: String): IncomingMessage {
         if (!isValidFormat(jsonString)) return IncomingMessage.Unknown
 
-        val jsonObject: JsonObject = JsonParser.parseString(jsonString).asJsonObject
+        val jsonObject = JsonParser.parseString(jsonString).asJsonObject
 
-        if (jsonObject.has("Msg")) {
-            return when (jsonObject.get("Msg").asString) {
-                "payment"     -> IncomingMessage.Payment(jsonObject)
-                "refund"      -> IncomingMessage.Refund(jsonObject)
-                "Status", "status", "Cancel" -> IncomingMessage.Control(jsonObject)
-                "advertencia", "tolerancia", "tolerencia", "error" -> IncomingMessage.Screen(
-                    jsonObject.get("Msg").asString,
-                    jsonObject.get("TipoMensaje").asString
-                )
-                else -> IncomingMessage.Unknown
-            }
-        }
-
+        //1. Primero ACK/NACK
         if (jsonObject.has("Respuesta")) {
             return when (jsonObject.get("Respuesta").asString) {
                 "ACK"  -> IncomingMessage.Ack
@@ -51,6 +39,30 @@ object MessageRouter {
             }
         }
 
+        //2. Luego mensajes con Msg
+        if (jsonObject.has("Msg")) {
+            val msgValue = jsonObject.get("Msg").asString.trim()
+
+            return when {
+                msgValue.equals("payment", true) ->
+                    IncomingMessage.Payment(jsonObject)
+
+                msgValue.equals("refund", true) ->
+                    IncomingMessage.Refund(jsonObject)
+
+                msgValue.equals("status", true) ||
+                        msgValue.equals("cancel", true) ->
+                    IncomingMessage.Control(jsonObject)
+
+                msgValue.toIntOrNull() != null -> //clave para {"Msg":"0"}
+                    IncomingMessage.TransactionResult(jsonObject)
+
+                msgValue in listOf("advertencia", "tolerancia", "tolerencia", "error") -> {
+                    val tipoMensaje = jsonObject.get("TipoMensaje")?.asString ?: ""
+                    IncomingMessage.Screen(msgValue, tipoMensaje)
+                }else -> IncomingMessage.Unknown
+            }
+        }
         return IncomingMessage.Unknown
     }
 }

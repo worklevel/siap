@@ -7,35 +7,52 @@ class SerialManager(private val onMessage: (IncomingMessage, String) -> Unit) {
 
     private val msgBuffer = StringBuilder()
     private val readLock = Any()
+    var yaRecibiResultado = false
 
     fun clearBuffer() {
         synchronized(readLock) { msgBuffer.clear() }
     }
 
     fun onBytesReceived(msg: ByteArray?) {
+        // 1. Lista temporal para guardar lo que extraigamos
+        val messagesToProcess = mutableListOf<Pair<IncomingMessage, String>>()
+
         synchronized(readLock) {
             try {
                 val data = msg?.let { String(it, StandardCharsets.UTF_8) } ?: return
                 msgBuffer.append(data)
-                val raw = msgBuffer.toString()
-                val startIndex = raw.indexOf('{')
-                val endIndex = if (startIndex != -1) findFirstJsonEnd(raw, startIndex) else -1
+                var raw = msgBuffer.toString()
 
-                if (startIndex != -1 && endIndex != -1) {
-                    val jsonString = raw.substring(startIndex, endIndex + 1)
-                    val remainder = raw.substring(endIndex + 1).trimStart()
-                    msgBuffer.clear()
-                    msgBuffer.append(remainder)
+                // 2. Bucle 'while' para sacar TODOS los JSONs completos que hayan llegado juntos
+                while (true) {
+                    val startIndex = raw.indexOf('{')
+                    val endIndex = if (startIndex != -1) findFirstJsonEnd(raw, startIndex) else -1
 
-                    Log.d("SIAP", "[SERIAL:IN] $jsonString")
-                    val message = MessageRouter.route(jsonString)
-                    onMessage(message, jsonString)
+                    if (startIndex != -1 && endIndex != -1) {
+                        val jsonString = raw.substring(startIndex, endIndex + 1)
+                        val message = MessageRouter.route(jsonString)
+                        messagesToProcess.add(Pair(message, jsonString))
+
+                        raw = raw.substring(endIndex + 1).trimStart()
+                    } else {
+                        break // Ya no hay más JSONs completos en el buffer
+                    }
                 }
+
+                // 3. Limpiamos y guardamos la basura o fragmentos incompletos
+                msgBuffer.clear()
+                msgBuffer.append(raw)
+
             } catch (e: Exception) {
                 Log.e("SIAP", "[SERIAL:PARSE_ERROR]", e)
                 msgBuffer.clear()
-                onMessage(IncomingMessage.Unknown, "")
+                messagesToProcess.add(Pair(IncomingMessage.Unknown, ""))
             }
+        } // 🔓 ¡AQUÍ SE LIBERA EL CANDADO DEL PUERTO SERIAL!
+
+        // 4. Se envían los mensajes a tu Activity/ViewModel sin bloquear la lectura
+        messagesToProcess.forEach { (message, jsonString) ->
+            onMessage(message, jsonString)
         }
     }
 

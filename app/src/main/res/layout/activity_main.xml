@@ -70,8 +70,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.495"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txt_title_home"
-            app:srcCompat="@drawable/logo" />
+            app:layout_constraintTop_toBottomOf="@+id/txt_title_home" />
 
         <ImageView
             android:id="@+id/sponsor"
@@ -94,6 +93,7 @@
             android:textAlignment="center"
             android:textSize="50sp"
             android:textStyle="bold"
+            android:textColor="@color/accent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.495"
             app:layout_constraintStart_toStartOf="parent"
@@ -107,10 +107,24 @@
             android:textAlignment="center"
             android:textSize="40sp"
             android:textStyle="bold"
+            android:textColor="@color/accent"
             app:layout_constraintBottom_toTopOf="@+id/payments"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/img_logo"
+            app:layout_constraintVertical_bias="0.567" />
+
+        <TextView
+            android:id="@+id/txt_version"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textSize="7sp"
+            android:textStyle="bold"
+            android:layout_marginEnd="2dp"
+            android:textColor="@color/screenTextPrimary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintVertical_bias="0.567" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

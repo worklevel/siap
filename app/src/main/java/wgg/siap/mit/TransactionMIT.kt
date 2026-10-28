@@ -21,6 +21,10 @@ class TransactionMIT(
         transactionManager.refundTransaction(amount, folio, auth)
     }
 
+    fun getTransactionsByReference(reference: String){
+        transactionManager.getTransactionsByReference(reference)
+    }
+
     /**************************************************** [ M I T ] - MITTransactionCallback **/
 
     override fun onSaveSignatureResponse(error: MITError?) {
@@ -46,9 +50,11 @@ class TransactionMIT(
 
     override fun onReturnTransactions(report: MITReport?, error: MITError?) {
         Log.d("TransactionMIT", "onReturnTransactions: $report, error: $error")
+        listener.onReturnTransaction(report = report, error = error)
     }
 
     interface TransactionListener {
         fun onRefundResult(transaction: MITTransaction?, error: MITError?)
+        fun onReturnTransaction(report: MITReport?, error: MITError?)
     }
 }

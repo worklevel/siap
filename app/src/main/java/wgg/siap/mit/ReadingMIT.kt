@@ -17,30 +17,32 @@ class ReadingMIT(
     }
     private var currency: MITCurrency = MITCurrency.MXN
     private var userTransaction: String = ""
-    private val payment = AtomicInteger(0)
+    //private val payment = AtomicInteger(0)
     fun connectReading() {
         readingManager.connect()
     }
     fun doRetail(
         amount: String,
         reference: String,
-        timeoutSeconds: Int = 15
+        timeoutSeconds: Int
     ) {
         // Timeout configurable entre 15 y 60 segundos (Manual SIAP §2.8)
         Log.d("APPLOG", "Estoy en el doRetail")
         val clampedTimeout = timeoutSeconds.coerceIn(15, 60)
+        Log.d("APPLOG", "$clampedTimeout")
         readingManager.setReadingSettings(clampedTimeout, true, true)
-        readingManager.doRetail(amount, reference, this.currency, this.userTransaction)
+        readingManager.doRetail(
+            amount = amount,
+            reference = reference,
+            currency = this.currency,
+            userTransaction = this.userTransaction)
     }
 
     fun cancelReadingCard()  {
         Log.d("APPLOG", "Estoy en un onCancelReadingCard")
-        if(payment.get() != 1) {
-            readingManager.cancelReadingCard()
-        }
+        readingManager.cancelReadingCard()
     }
     fun submitPayment(merchant: String, flag: Int) {
-        payment.set(flag)
         readingManager.submitPayment(merchant)
     }
     /**************************************************** [ M I T ] - MITDeviceCallback **/
@@ -52,19 +54,14 @@ class ReadingMIT(
     override fun onMITError(error: MITError?) {
         Log.d("APPLOG", "Estoy en un mit error")
         error?.description?.let {
-            payment.set(0)
             listener.readingResult(it)
         }
     }
 
-    override fun onPaymentAskDcc(localCurrency: MITDccOption, foreignCurrency: MITDccOption) {
-        /** Don't support IM30 **/
-    }
+    override fun onPaymentAskDcc(localCurrency: MITDccOption, foreignCurrency: MITDccOption) = TODO()
 
     override fun onCancelReadingCard() {
         Log.d("APPLOG", "Estoy en un onCancelReading")
-
-        payment.set(0)
         listener.cancelReadingCard()
     }
 
@@ -77,12 +74,10 @@ class ReadingMIT(
     }
 
     override fun onCardInformationResponse(card: MITCard) {
-        payment.set(0)
         listener.confirmTransaction(card)
     }
 
     override fun onTransactionResponse(transaction: MITTransaction) {
-        payment.set(0)
         listener.displayTransactionResult(transaction)
     }
 
